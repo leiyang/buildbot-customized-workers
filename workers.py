@@ -105,13 +105,15 @@ class MyKubeWorker(MyWorkerBase, worker.KubeLatentWorker):
             mem = "1G"
         if cpu not in ["1", "2", "4"]:
             cpu = "1"
+
         size = build.getProperty("HYPER_SIZE")
+        env=self.createEnvironment()
         _d={
             'WORKERPASS':'pass',
             'WORKER_ENVIRONMENT_BLACKLIST':'DOCKER_BUILDBOT* BUILDBOT_ENV_* BUILDBOT_1* WORKER_ENVIRONMENT_BLACKLIST',
             }
 
-        self.createEnvironment().update(_d)
+        env.update(_d)
 
         if size is not None:
             # backward compat for rebuilding old commits
@@ -142,7 +144,7 @@ class MyKubeWorker(MyWorkerBase, worker.KubeLatentWorker):
                     "env": [{
                         "name": k,
                         "value": v
-                    } for k, v in self.createEnvironment().items()],
+                    } for k, v in env.items()],
                     "resources": {
                         "requests": {
                             "cpu": cpu,
