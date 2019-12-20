@@ -149,7 +149,7 @@ class MyKubeWorker(MyWorkerBase, worker.KubeLatentWorker):
         kube_config=kubeclientservice.KubeInClusterConfigLoader()
         kube_config.reconfigService()
         data=kube_config.getConfig()
-        print(data)
+        pprint(data)
 
         return worker.KubeLatentWorker.__init__(
             self,
@@ -162,6 +162,7 @@ class MyKubeWorker(MyWorkerBase, worker.KubeLatentWorker):
     # todo: upstream this!
     @defer.inlineCallbacks
     def start_instance(self, build):
+        pprint("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
         yield self.stop_instance(reportFailure=False)
         pod_spec = self.get_pod_spec(build)
         pprint(pod_spec)
