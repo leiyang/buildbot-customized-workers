@@ -163,7 +163,7 @@ class MyKubeWorker(MyWorkerBase, worker.KubeLatentWorker):
     @defer.inlineCallbacks
     def start_instance(self, build):
         pprint("DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD")
-        yield self.stop_instance(reportFailure=False)
+        #yield self.stop_instance(reportFailure=False)
         pod_spec = self.get_pod_spec(build)
         pprint(pod_spec)
         try:
