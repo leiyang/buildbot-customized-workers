@@ -146,12 +146,12 @@ class MyKubeWorker(MyWorkerBase, worker.KubeLatentWorker):
         }
     def __init__(self, name, **kwargs):
         kwargs = self.extract_attrs(name, **kwargs)
-        kube_config=kubeclientservice.KubeInClusterConfigLoader()
-        kube_config.reconfigService()
-        data=kube_config.getConfig()
-        pprint(data)
+        #kube_config=kubeclientservice.KubeInClusterConfigLoader()
+        #kube_config.reconfigService()
+        #data=kube_config.getConfig()
+        #pprint(data)
 
-        return worker.KubeLatentWorker.__init__(
+        worker.KubeLatentWorker.__init__(
             self,
             name,
             kube_config=kube_config,

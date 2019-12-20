@@ -34,26 +34,35 @@ c['change_source'].append(changes.GitPoller(
         pollinterval=30))
 
 
-c['schedulers'] = []
-c['schedulers'].append(schedulers.SingleBranchScheduler(
-                            name="all",
-                            change_filter=util.ChangeFilter(branch='master'),
-                            treeStableTimer=None,
-                            builderNames=["runtests"]))
-c['schedulers'].append(schedulers.ForceScheduler(
-                            name="force",
-                            builderNames=["runtests"]))
-
+c['schedulers'] = [
+    schedulers.ForceScheduler(name="force", builderNames=["testy"])
+]
+triggereables = []
+for i in range(num_concurrent):
+    c['schedulers'].append(
+        schedulers.Triggerable(
+            name="trigsched" + str(i), builderNames=["build"]))
+    triggereables.append("trigsched" + str(i))
 
 f = BuildFactory()
 f.addStep(steps.ShellCommand(command='echo hello'))
+f.addStep(
+    steps.Trigger(
+        schedulerNames=triggereables,
+        waitForFinish=True,
+        updateSourceStamp=True))
 f.addStep(steps.ShellCommand(command='echo world'))
-
+f2 = BuildFactory()
+f2.addStep(steps.ShellCommand(command='echo ola'))
+extra_steps=[]
+for step in extra_steps:
+    f2.addStep(step)
 c['builders'] = [
+    BuilderConfig(name="testy", workernames=["kubernetes0"], factory=f),
     BuilderConfig(
         name="build",
         workernames=["kubernetes" + str(i) for i in range(num_concurrent)],
-        factory=f)
+        factory=f2)
 ]
 #########################################################
 
