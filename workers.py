@@ -6,6 +6,7 @@ import random
 import string
 
 from buildbot.plugins import worker, util
+from pprint import pprint
 
 
 class MyWorkerBase(object):
@@ -145,11 +146,17 @@ class MyKubeWorker(MyWorkerBase, worker.KubeLatentWorker):
         }
     def __init__(self, name, **kwargs):
         kwargs = self.extract_attrs(name, **kwargs)
+        kube_config=kubeclientservice.KubeInClusterConfigLoader()
+        kube_config.reconfigService()
+        data=kube_config.getConfig()
+        print(data)
+
         return worker.KubeLatentWorker.__init__(
             self,
             name,
             kube_config=kube_config,
             image="buildbot/buildbot-worker",
+            masterFQDN=worker.KubeLatentWorker.get_fqdn,
             **kwargs)
 
     # todo: upstream this!
@@ -157,6 +164,7 @@ class MyKubeWorker(MyWorkerBase, worker.KubeLatentWorker):
     def start_instance(self, build):
         yield self.stop_instance(reportFailure=False)
         pod_spec = self.get_pod_spec(build)
+        pprint(pod_spec)
         try:
             yield self._kube.createPod(self.namespace, pod_spec)
         except kubeclientservice.KubeError as e:
