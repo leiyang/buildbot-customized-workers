@@ -131,7 +131,7 @@ class MyKubeWorker(MyWorkerBase, worker.KubeLatentWorker):
                     "image": image,
                     "ports": [{
                         "containerPort": 9989,
-                        "name": worker
+                        "name": "worker"
                     }],
                     "env": [{
                         "name": k,
