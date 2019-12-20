@@ -106,6 +106,12 @@ class MyKubeWorker(MyWorkerBase, worker.KubeLatentWorker):
         if cpu not in ["1", "2", "4"]:
             cpu = "1"
         size = build.getProperty("HYPER_SIZE")
+        _d={
+            'WORKERPASS':'pass',
+            'WORKER_ENVIRONMENT_BLACKLIST':'DOCKER_BUILDBOT* BUILDBOT_ENV_* BUILDBOT_1* WORKER_ENVIRONMENT_BLACKLIST',
+            }
+
+        self.createEnvironment().update(_d)
 
         if size is not None:
             # backward compat for rebuilding old commits
