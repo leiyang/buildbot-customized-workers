@@ -129,6 +129,10 @@ class MyKubeWorker(MyWorkerBase, worker.KubeLatentWorker):
                 "containers": [{
                     "name": self.getContainerName(),
                     "image": image,
+                    "ports": [{
+                        "containerPort": 9989,
+                        "name": worker
+                    }],
                     "env": [{
                         "name": k,
                         "value": v
