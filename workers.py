@@ -109,7 +109,7 @@ class MyKubeWorker(MyWorkerBase, worker.KubeLatentWorker):
         size = build.getProperty("HYPER_SIZE")
         env=self.createEnvironment()
         _d={
-            'WORKERPASS':'pass',
+            #'WORKERPASS':'pass',
             'WORKER_ENVIRONMENT_BLACKLIST':'DOCKER_BUILDBOT* BUILDBOT_ENV_* BUILDBOT_1* WORKER_ENVIRONMENT_BLACKLIST',
             }
 
