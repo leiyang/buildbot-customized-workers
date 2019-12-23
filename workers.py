@@ -108,12 +108,12 @@ class MyKubeWorker(MyWorkerBase, worker.KubeLatentWorker):
 
         size = build.getProperty("HYPER_SIZE")
         env=self.createEnvironment()
-        #_d={
-        #    #'WORKERPASS':'pass',
-        #    'WORKER_ENVIRONMENT_BLACKLIST':'DOCKER_BUILDBOT* BUILDBOT_ENV_* BUILDBOT_1* WORKER_ENVIRONMENT_BLACKLIST',
-        #    }
+        _d={
+            'WORKERPASS':'pass',
+            'WORKER_ENVIRONMENT_BLACKLIST':'DOCKER_BUILDBOT* BUILDBOT_ENV_* BUILDBOT_1* WORKER_ENVIRONMENT_BLACKLIST',
+            }
 
-        #env.update(_d)
+        env.update(_d)
 
         if size is not None:
             # backward compat for rebuilding old commits
