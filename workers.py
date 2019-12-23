@@ -168,7 +168,8 @@ class MyKubeWorker(MyWorkerBase, worker.KubeLatentWorker):
             name,
             kube_config=kube_config,
             image="buildbot/buildbot-worker:master",
-            masterFQDN=worker.KubeLatentWorker.get_fqdn,
+            #masterFQDN=worker.KubeLatentWorker.get_fqdn,
+            masterFQDN=worker.KubeLatentWorker.get_ip,
             **kwargs)
 
     # todo: upstream this!
