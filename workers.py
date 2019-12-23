@@ -98,7 +98,7 @@ class MyKubeWorker(MyWorkerBase, worker.KubeLatentWorker):
 
         cpu = str(build.getProperty("NUM_CPU", "1"))
         mem = str(build.getProperty("MEMORY_SIZE", "1G"))
-        image = str(build.getProperty("DOCKER_IMAGE", "buildbot/buildbot-worker:latest"))
+        image = str(build.getProperty("DOCKER_IMAGE", "buildbot/buildbot-worker"))
 
         # ensure proper configuration
         if mem not in ["256M", "512M", "1G", "2G", "4G"]:
