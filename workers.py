@@ -98,7 +98,7 @@ class MyKubeWorker(MyWorkerBase, worker.KubeLatentWorker):
 
         cpu = str(build.getProperty("NUM_CPU", "1"))
         mem = str(build.getProperty("MEMORY_SIZE", "1G"))
-        image = str(build.getProperty("DOCKER_IMAGE", "buildbot/buildbot-worker"))
+        image = str(build.getProperty("DOCKER_IMAGE", "buildbot/buildbot-worker:master"))
 
         # ensure proper configuration
         if mem not in ["256M", "512M", "1G", "2G", "4G"]:
@@ -167,7 +167,7 @@ class MyKubeWorker(MyWorkerBase, worker.KubeLatentWorker):
             self,
             name,
             kube_config=kube_config,
-            image="buildbot/buildbot-worker",
+            image="buildbot/buildbot-worker:master",
             masterFQDN=worker.KubeLatentWorker.get_fqdn,
             **kwargs)
 
